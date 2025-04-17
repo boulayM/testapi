@@ -3,6 +3,7 @@
 const User = require ('../models/user');
 const bcrypt = require ('bcrypt');
 const jwt = require ('jsonwebtoken');
+const SECRET_KEY = process.env.SECRET_KEY;
 
 //ON EXPORTE LE CALLBACK AFIN D'Y ACCEDER DANS NOTRE GESTIONNAIRE DE ROUTES
 //ICI C'EST LE CALLBACK QUI SERVIRA A AJOUTER UN USER AVEC SON ID
