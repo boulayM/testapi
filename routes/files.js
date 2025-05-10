@@ -1,14 +1,45 @@
 const express = require ('express');
 const router = express.Router();
-const service = require ('../services/files');
-const multer = require ('../middlewares/files-storage');
-const private = require ('../middlewares/private');
+const multer = require ('multer');
+const { storage } = require ('../middlewares/files-storage');
+const filesService = require ('../services/files');
+const Files = require ('../models/file');
+const { checkJWT } = require ('../middlewares/private');
+
+const upload = multer ({ storage: storage });
 
 
-router.get('/', private.chckeJWT, service.getAllFiles);
-router.post('/', multer, service.createOneFile);
-router.get('/:id', private.chckeJWT, service.getOneFile);
-router.put('/:id', private.chckeJWT, multer, service.modifyOneFile);
-router.delete('/delete', private.chckeJWT, service.deleteOneFile);
+/*router.get('/', checkJWT, async (req, res) => {
+    try {
+        const files = await File.find();
+        res.json(files);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});*/
+
+router.get('/', checkJWT, filesService.getOneFile);
+
+router.post('/', upload.single ('upload_file'), filesService.createOneFile);
+router.put('/:id', checkJWT, upload.single ('upload_file'), filesService.modifyOneFile);
+   
+/*router.put('/:id', checkJWT, async (req, res) => {
+    try {
+        const files = await File.find();
+        res.json(files);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});*/
+router.delete('/delete', checkJWT, filesService.deleteOneFile)
+
+/*router.delete('/delete', checkJWT, async (req, res)=>{
+    try {
+        const files = await File.find();
+        res.json(files);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});*/
 
 module.exports = router;

@@ -11,25 +11,32 @@ const storage = multer.diskStorage({
         callback(null, 'uploads');
     },
     filename: (req, file, callback) => {
-        const name = file.originalname.split(' ').join('_');
-        console.log(name)
-        const extension = MIME_TYPES[file.mimetype];
-        //CI DESSOUS LE CALLBACK AJOUTE UN TIMESTAMP CONCATÉNÉ
-        //AVEC LE NOM DE L'IMAGE COMME NOM D'IMAGE POUR LA SAUVEGARDE
-        //CELA PERMET DE LA RENDRE UNIQUE
 
-        callback(null, Date.now() + name);
+        //RECUPERER L'EXTENTION DU FICHIER A PARTIR DU MIME_TYPE
+
+        const extension = MIME_TYPES[file.mimetype];
+
+        //RECUPERER LA DATE DU JOUR
+
+        const date = new Date();
+
+        const day = date.getDay();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+
+        //GENERER LO NOM DU FICHIER AVEC L'EXTENSION
+
+        const name = file.originalname.toLowerCase().split(' ').join('_');
+        let formattedDate;
+
+        //OPERATEUR TERNAIRE UTILISE POUR INITALISER formattedDate
+
+        month < 10 ? formattedDate = `${day}-0${month}-${year}` : formattedDate = `${day}-${month}-${year}`
+        callback(null, formattedDate + '_' + name);
+        
     }
 });
 
-module.exports = multer({storage: storage});
+module.exports = { storage };
 
-/*
-const upload = multer({ dest: './uploads/' })
-app.post('/', upload.single('uploaded_file'), function (req, res) {
-   // req.file is the name of your file in the form above, here 'uploaded_file'
-   // req.body will hold the text fields, if there were any 
-   console.log(req.file, req.body)
-});
-
-module.exports = multer ({upload: upload});*/

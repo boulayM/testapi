@@ -1,8 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 const userRoute = require ('../routes/users');
-const { version } = require('mongoose');
 
 /* GET home page. */
 router.get('/', async (req, res) => {
