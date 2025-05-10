@@ -1,6 +1,6 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
-//ON IMPORTE LE MODEULE BCRYPT QUI PERMET DE HACHER DES EXPRESSIONS
+//ON IMPORTE LE MODULE BCRYPT QUI PERMET DE HACHER DES EXPRESSIONS
 const bcrypt = require ('bcrypt');
 
 const User = new Schema ({
@@ -19,7 +19,8 @@ const User = new Schema ({
         type: String,
         trim: true,
         required: [true, "l'e-mail est requis"],
-        lowercase: true
+        lowercase: true,
+        unique: true
     },
 
     password: {
