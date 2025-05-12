@@ -53,11 +53,13 @@ app.use((err, req, res, next) => {
     res.status(500).send('Erreur serveur !');
 });
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+
 app.get ('/', (req, res) => {
     res.render('index');
 });
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 module.exports = app;
