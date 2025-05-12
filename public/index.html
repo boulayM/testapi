@@ -7,7 +7,25 @@
 
 <body>
   Aller à l'API
-  <a href="/index">ALLER</a>
+  <button click="index()">ALLER</button>
 </body>
 
 </html>
+
+<script>
+  function index() {
+    router.get('/', async (req, res) => {
+ /* res.status (200).json({
+    name: process.env.APP_NAME,
+    version: '1.0',
+    status: 200,
+    message: 'Bienvenue sur l\'API !'
+  });*/
+
+  res.render('index', {
+    title: 'Accueil'
+  })
+});
+
+  }
+</script>
